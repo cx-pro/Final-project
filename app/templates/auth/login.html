@@ -1,0 +1,42 @@
+{% extends "layouts/auth.html" %}
+{% block title %}登入{% endblock title %}
+{% block content%}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <main class="form-signin col-12 col-md-9 col-lg-6">
+            <form method="post">
+                <i class="bi bi-cast fs-1 p-0"></i>
+                <h1 class="h3 mb-3 fw-normal">請登入</h1>
+
+                <div class="form-floating">
+                    <input type="email" class="form-control rounded-bottom-0" name="email" id="floatingInput"
+                        placeholder=" " value="{{email or ''}}" required>
+                    <label for="floatingInput">電子信箱</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="password" class="form-control rounded-top-0 border-top-0" name="password"
+                        id="floatingPassword" placeholder="Password" value="{{password or ''}}" required>
+                    <label for="floatingPassword">密碼</label>
+                </div>
+                {% if status %}
+                {% if status=="empty" %}
+                <div class="text-danger">資料未填寫完整</div>
+                {% else %}
+                <div class="text-danger">登入憑證無效</div>
+                {% endif %}
+                {% endif %}
+
+                <div class="form-check text-start my-3">
+                    <input class="form-check-input" type="checkbox" value="remember-me" name="remember-me"
+                        id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        記住我
+                    </label>
+                </div>
+                <button class="btn btn-primary w-100 py-2 fw-bold" type="submit">登入</button>
+            </form>
+        </main>
+    </div>
+</div>
+{% endblock content%}

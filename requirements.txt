@@ -1,0 +1,6 @@
+gevent
+flask
+flask_login
+flask_compress
+flask-sqlalchemy
+flask-bcrypt

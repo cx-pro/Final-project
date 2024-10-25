@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" data-bs-theme="{{session.get('dark','light')}}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}｜期末專案 — 程式設計概念與方法</title>
+</head>
+
+<body>
+    {% include  "layouts/includes/auth/header.html"%}
+    <div>
+        {% block content %}
+        {% endblock content %}
+    </div>
+    {% include  "layouts/includes/auth/footer.html"%}
+</body>
+
+</html>

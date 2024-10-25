@@ -1,0 +1,50 @@
+<nav class="py-2 bg-body-tertiary border-bottom fw-bold">
+    <div class="container d-flex flex-wrap">
+        <ul class="nav me-auto">
+            <li class="nav-item"><a href="/" class="nav-link link-body-emphasis px-2">首頁</a></li>
+            {%if current_user.is_authenticated%}
+            {% for index, name in enumerate(["總覽","電子書","影片","音樂"]) %}
+            <li class="nav-item">
+                <a href="/media{% if index %}?category={{index}}{% endif %}" class="nav-link link-body-emphasis px-2">
+                    {{name}}
+                </a>
+            </li>
+            {% endfor %}
+            {%endif%}
+        </ul>
+        <ul class="nav">
+            {{current_user}}
+            {%if current_user.is_authenticated%}
+            <li class="nav-item"><a href="/logout" class="nav-link link-body-emphasis px-2" data-bs-toggle="modal"
+                    data-bs-target="#logoutModal">登出</a></li>
+            {%if current_user.level>setting().ADMIN_LEVEL%}
+            <li class="nav-item"><a href="/ctrl" class="nav-link link-body-emphasis px-2" data-bs-toggle="modal"
+                    data-bs-target="#logoutModal">管理面板</a></li>
+            {%endif%}
+            {%else%}
+            <li class="nav-item"><a href="/login" class="nav-link link-body-emphasis px-2">登入</a></li>
+            <li class="nav-item"><a href="/signup" class="nav-link link-body-emphasis px-2">註冊</a></li>
+            {%endif%}
+        </ul>
+    </div>
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 fw-bold" id="logoutModalLabel">確定登出？</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <form action="/logout" method="post">
+                    <div class="btn-group-sm">
+                        <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary fw-bold">確認</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
