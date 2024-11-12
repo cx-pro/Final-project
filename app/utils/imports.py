@@ -23,6 +23,7 @@ from flask_compress import Compress
 
 from flask_bcrypt import Bcrypt
 
+from uuid import uuid4
 
 import sys
 import os

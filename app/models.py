@@ -1,5 +1,6 @@
 from app.utils.imports import *
 from app import db
+from datetime import datetime, timezone
 
 
 class Category(db.Model):
@@ -21,16 +22,21 @@ class Media(db.Model):
     category_id = db.Column(db.Integer)
     path = db.Column(db.Text)
     uploader = db.Column(db.Text)
-    created_at = db.Column(db.Text)
-    updated_at = db.Column(db.Text)
+    created_at = db.Column(
+        db.DateTime, nullable=False,
+        default=datetime.now(timezone.utc)
+    )
+    updated_at = db.Column(
+        db.DateTime, nullable=False,
+        default=datetime.now(timezone.utc),
+        onupdate=datetime.now(timezone.utc)
+    )
 
-    def __init__(self, name, category_id, path, uploader, created_at, updated_at):
+    def __init__(self, name, category_id, path, uploader):
         self.name = name
         self.category_id = category_id
         self.path = path
         self.uploader = uploader
-        self.created_at = created_at
-        self.updated_at = updated_at
 
     def __repr__(self):
         return '<Media %r>' % self.name

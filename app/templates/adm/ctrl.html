@@ -1,0 +1,13 @@
+{% extends "layouts/adm.html" %}
+{% block title %}管理面板{% endblock title %}
+{% block content%}
+<div class="justify-content-around d-flex" style="width: 50rem;">
+    <a href="/ctrl/new" class="btn btn-sm btn-outline-success fw-bold d-block px-3">新增</a>
+    {% for index, name in enumerate(["總覽","電子書","影片","音樂"]) %}
+    <a href="/ctrl/media{% if index %}?category={{index}}{% endif %}"
+        class="btn btn-sm btn-outline-primary fw-bold d-block px-3">
+        {{name}}
+    </a>
+    {% endfor %}
+</div>
+{% endblock content%}

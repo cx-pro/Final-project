@@ -1,11 +1,12 @@
 <nav class="py-2 bg-body-tertiary border-bottom fw-bold">
     <div class="container d-flex flex-wrap">
         <ul class="nav me-auto">
-            <li class="nav-item"><a href="/" class="nav-link link-body-emphasis px-2">首頁</a></li>
+            <li class="nav-item"><a href="{% if current_user.is_authenticated and current_user.is_admin %}/ctrl{% endif %}/" class="nav-link link-body-emphasis px-2">首頁</a></li>
             {%if current_user.is_authenticated%}
             {% for index, name in enumerate(["總覽","電子書","影片","音樂"]) %}
             <li class="nav-item">
-                <a href="/media{% if index %}?category={{index}}{% endif %}" class="nav-link link-body-emphasis px-2">
+                <a href="{% if current_user.is_authenticated and current_user.is_admin %}/ctrl{% endif %}/media{% if index %}?category={{index}}{% endif %}"
+                    class="nav-link link-body-emphasis px-2">
                     {{name}}
                 </a>
             </li>
@@ -13,13 +14,15 @@
             {%endif%}
         </ul>
         <ul class="nav">
-            {{current_user}}
             {%if current_user.is_authenticated%}
-            <li class="nav-item"><a href="/logout" class="nav-link link-body-emphasis px-2" data-bs-toggle="modal"
-                    data-bs-target="#logoutModal">登出</a></li>
-            {%if current_user.level>setting().ADMIN_LEVEL%}
-            <li class="nav-item"><a href="/ctrl" class="nav-link link-body-emphasis px-2" data-bs-toggle="modal"
-                    data-bs-target="#logoutModal">管理面板</a></li>
+            <li class="nav-item">
+                <a href="/logout" class="nav-link link-body-emphasis px-2" data-bs-toggle="modal"
+                    data-bs-target="#logoutModal">登出</a>
+            </li>
+            {%if current_user.is_admin%}
+            <li class="nav-item">
+                <a href="/ctrl/" class="nav-link link-body-emphasis px-2">管理面板</a>
+            </li>
             {%endif%}
             {%else%}
             <li class="nav-item"><a href="/login" class="nav-link link-body-emphasis px-2">登入</a></li>

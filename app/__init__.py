@@ -9,8 +9,8 @@ app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
-login_manager.login_view = '__login'
-login_manager.refresh_view = '__login'
+login_manager.login_view = 'auth.__login'
+login_manager.refresh_view = 'auth.__login'
 login_manager.REMEMBER_COOKIE_HTTPONLY = True
 login_manager.REMEMBER_COOKIE_REFRESH_EACH_REQUEST = True
 
@@ -30,18 +30,17 @@ from app.routes.auth import auth  # nopep8
 from app.dbs.seeders.mainSeeder import runSeeder  # nopep8
 from app.utils.config import config  # nopep8
 from app.utils.config import setting  # nopep8
-
 app.register_blueprint(adm)
 app.register_blueprint(api)
 app.register_blueprint(auth)
-app.register_blueprint(web)  # , url_perfix="/")
+app.register_blueprint(web)
 DEFAULT_NAMESPACE["enumerate"] = enumerate
 DEFAULT_NAMESPACE["config"] = config
 DEFAULT_NAMESPACE["setting"] = setting
 
 with app.app_context():
+    # db.create_all()
     runSeeder()
-    db.create_all()
 
 
 @login_manager.user_loader
