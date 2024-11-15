@@ -35,6 +35,7 @@ def __login():
 
 
 @auth.route("/logout", methods=["post"])
+@login_required
 def __logout():
     if current_user.is_authenticated:
         logout_user()

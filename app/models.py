@@ -40,6 +40,10 @@ class Media(db.Model):
 
     def __repr__(self):
         return '<Media %r>' % self.name
+    
+    @property
+    def category(self):
+        return Category.query.filter_by(id=self.category_id).first()
 
 
 class UserM(db.Model):

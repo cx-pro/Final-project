@@ -1,0 +1,24 @@
+{% extends "layouts/web.html" %}
+{% block title %}多媒體{% endblock title %}
+{% block content%}
+<script>
+    function showFullscreen() {
+        var elem = document.getElementById("media_frame");
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        }
+    }
+</script>
+<div class="d-flex w-100 justify-content-around mb-3">
+    <button type="button" class="nav-link ms-3 fs-3 text-primary border-bottom border-primary border-2 pe-1"
+        onclick="history.back()"><i class="bi bi-arrow-bar-left me-3"></i>返回</button>
+    <button type="button" class="btn btn-outline-primary fs-3 fw-bold" onclick="showFullscreen()">全螢幕</button>
+</div>
+<iframe id="media_frame" src="/media/source/{{media.id}}" class="border-0 w-100 min-vh-100"></iframe>
+{% endblock content%}

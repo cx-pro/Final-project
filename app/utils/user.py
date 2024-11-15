@@ -39,8 +39,8 @@ def roles_required(role: str, debug=False):
                 return f(*args, **kwargs)
             if not current_user.is_authenticated:
                 return redirect(url_for('auth.__login', next=request.full_path))
-            if current_user.role.name != role:
-                return redirect("/")
+            if current_user.role.level > Role.query.filter_by(name=role).first().level:
+                abort(404)
             return f(*args, **kwargs)
         return decorated_function
     return decorator

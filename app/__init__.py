@@ -39,8 +39,8 @@ DEFAULT_NAMESPACE["config"] = config
 DEFAULT_NAMESPACE["setting"] = setting
 
 with app.app_context():
-    # db.create_all()
-    runSeeder()
+    db.create_all()
+    # runSeeder()
 
 
 @login_manager.user_loader

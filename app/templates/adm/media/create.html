@@ -6,11 +6,13 @@
         <div class="row justify-content-between">
             <div class="col-12 col-md-6 col-lg-4">
                 <label for="name_field" class="fw-bold">媒體名稱</label>
-                <input type="text" class="form-control shadow-sm" name="name" id="name_field" placeholder=" " required>
+                <input type="text" class="form-control shadow-sm" name="name" id="name_field" {% if m %}
+                    value="{{m.name}}" {%endif%} placeholder=" " required>
                 {%if error and error.get("name_field")%}
                 <div class="text-danger fw-bold">{{error["name_field"]}}</div>
                 {%endif%}
             </div>
+            {%if not m%}
             <div class="col-12 col-md-6 col-lg-4 mt-3 mt-md-0">
                 <label for="type_field" class="fw-bold">媒體類別</label>
                 <select name="type" id="type_field" class="form-select shadow-sm" required>
@@ -29,12 +31,13 @@
                 <div class="text-danger fw-bold">{{error["file_field"]}}</div>
                 {%endif%}
             </div>
+            {%endif%}
             <div class="col-12 mt-5">
                 <div class="justify-content-sm-end justify-content-center w-100 gap-3 d-flex flex-wrap">
                     <button type="submit"
-                        class="btn px-3 btn-primary fw-bold mt-3 flex-fill flex-sm-grow-0 flex-sm-shrink-0"><span
-                            class="me-3">新</span>增</button>
-                    <a href="/ctrl"
+                        class="btn px-3 btn-primary fw-bold mt-3 flex-fill flex-sm-grow-0 flex-sm-shrink-0">{%if
+                        m%}<span class="me-3">儲</span>存{%else%}<span class="me-3">新</span>增{%endif%}</button>
+                    <a href="/ctrl/"
                         class="btn px-3 btn-outline-danger fw-bold mt-3 flex-fill flex-sm-grow-0 flex-sm-shrink-0"><span
                             class="me-3">取</span>消</a>
                 </div>

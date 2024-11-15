@@ -21,7 +21,14 @@ def __ctrl():
 @adm.route("/ctrl/media")
 @roles_required('admin')
 def __media_list():
-    return rd("media/list.html")
+    category = request.args.get("category", 0)
+    return rd("media/list.html", media=sorted(Media.query.filter_by(category_id=category) if category else Media.query.all()))
+
+
+@adm.route("/ctrl/media/<id>")
+@roles_required("user")
+def __show_media(id):
+    return rd("media/show.html", media=Media.query.filter_by(id=id).first())
 
 
 @adm.route("/ctrl/new", methods=["get", "post"])
@@ -42,13 +49,23 @@ def __new():
     return rd("media/create.html")
 
 
-@adm.route("/ctrl/edit")
+@adm.route("/ctrl/media/<int:id>/edit", methods=["get", "post"])
 @roles_required('admin')
-def __edit():
-    return rd("media/create.html")
+def __edit(id):
+    if request.method.lower() == "post":
+        form = request.form
+        if Media.query.filter_by(name=form["name"]).first():
+            return rd("media/create.html", m=Media.query.filter_by(id=id).first(), error={"name_field": "此名稱已存在"})
+        Media.query.filter_by(id=id).update(
+            {"name": form["name"], "uploader": current_user.name})
+        db.session.commit()
+        return redirect(url_for("adm.__media_list"))
+    return rd("media/create.html", m=Media.query.filter_by(id=id).first())
 
 
-@adm.route("/ctrl/destroy")
+@adm.route("/ctrl/media/<int:id>/destroy")
 @roles_required('admin')
-def __destroy():
+def __destroy(id):
+    db.session.delete(Media.query.filter_by(id=id).first())
+    db.session.commit()
     return redirect(url_for("adm.__media_list"))
