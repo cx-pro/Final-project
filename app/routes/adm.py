@@ -4,6 +4,7 @@ from flask import render_template as _rd
 from app.utils.user import roles_required
 from app.models import *
 from app.utils.funcs import get_file_extension
+from app import bcrypt
 
 adm = Blueprint("adm", __name__)
 
@@ -69,3 +70,45 @@ def __destroy(id):
     db.session.delete(Media.query.filter_by(id=id).first())
     db.session.commit()
     return redirect(url_for("adm.__media_list"))
+
+
+@adm.route("/ctrl/member")
+@roles_required('admin')
+def __member():
+    return rd("member/list.html", members=UserM.query.all(), role=Role.query, ac=sum([int(i.is_admin) for i in UserM.query.all()]))
+
+
+@adm.route("/member/<id>/edit", methods=["get", "post"])
+@roles_required('admin')
+def __edit_member(id):
+    old_user_query = UserM.query.filter_by(id=id)
+    old_user = old_user_query.first()
+    if request.method.lower == "post":
+        if request.form["email"] != old_user.email and UserM.query.filter_by(email=request.form["email"]).first():
+            return rd("member/create.html", roles=Role.query.all(), error={"email": "電子信箱已被使用"}, userM=UserM(request.form["email"], request.form["name"],
+                                                                                                             request.form["password"], int(request.form["role_id"])))
+        old_user_query.update({})
+
+    return rd("member/create.html", userM=old_user, roles=Role.query.all())
+
+
+@adm.route("/member/<id>/destroy")
+@roles_required('admin')
+def __destory_member(id):
+    db.session.delete(UserM.query.filter_by(id=id).first())
+    db.session.commit()
+    return redirect(url_for("adm.__member"))
+
+
+@adm.route("/member/create", methods=["get", "post"])
+@roles_required('admin')
+def __create_member():
+    if request.method.lower() == "post":
+        if UserM.query.filter_by(email=request.form["email"]).first():
+            return rd("member/create.html", roles=Role.query.all(), error={"email": "電子信箱已被使用"}, userM=UserM(request.form["email"], request.form["name"],
+                                                                                                             request.form["password"], int(request.form["role_id"])))
+        db.session.add(UserM(request.form["email"], request.form["name"], bcrypt.generate_password_hash(
+            request.form["password"]), int(request.form["role_id"])))
+        db.session.commit()
+        return redirect(url_for("adm.__member"))
+    return rd("member/create.html", roles=Role.query.all())

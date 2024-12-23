@@ -1,0 +1,82 @@
+{% extends "layouts/auth.html" %}
+{% block title %}註冊{% endblock title %}
+{% block content%}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <main class="form-signin col-12 col-md-9 col-lg-6">
+            <form method="post">
+                <i class="bi bi-cast fs-1 p-0"></i>
+                <h1 class="h3 mb-3 fw-normal">註冊</h1>
+
+                <div class="form-floating">
+                    <input type="email" class="form-control rounded-bottom-0" name="email" id="floatingInput"
+                        placeholder=" " value="{{email or ''}}" required>
+                    <label for="floatingInput">電子信箱</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control rounded-bottom-0" name="name" id="floatingInput2"
+                        placeholder=" " value="{{name or ''}}" required>
+                    <label for="floatingInput2">暱稱</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="password" class="form-control rounded-top-0 border-top-0" name="password"
+                        id="floatingPassword" placeholder="Password" value="{{password or ''}}" required>
+                    <label for="floatingPassword">密碼</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control rounded-top-0 border-top-0" name="repeat_password"
+                        id="floatingRepeatPassword" placeholder="Repeat Password" value="{{repeat_password or ''}}"
+                        required>
+                    <label for="floatingRepeatPassword">重複密碼</label>
+                </div>
+                <div class="text-danger d-none" id="repeat_password_invalid">重複密碼不相同</div>
+                {% if status %}
+                {% if status=="empty" %}
+                <div class="text-danger">資料未填寫完整</div>
+                {% else %}
+                {% if status=="invalid2" %}
+                <div class="text-danger">重複密碼不相同</div>
+                {% else %}
+                <div class="text-danger">電子信箱已被使用</div>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+
+                <div class="form-check text-start my-3">
+                    <input class="form-check-input" type="checkbox" value="remember-me" name="remember-me"
+                        id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        記住我
+                    </label>
+                </div>
+                <button class="btn btn-primary w-100 py-2 fw-bold" type="submit" id="submit_btn">註冊</button>
+            </form>
+        </main>
+    </div>
+</div>
+<script>
+    $(() => {
+        $("#floatingPassword").on("input", () => {
+            if ($("#floatingPassword").val() != $("#floatingRepeatPassword").val()) {
+                $("#repeat_password_invalid").removeClass("d-none");
+                $("#submit_btn").prop("disabled", true);
+            }
+            else {
+                $("#repeat_password_invalid").addClass("d-none");
+                $("#submit_btn").prop("disabled", false);
+            }
+        })
+        $("#floatingRepeatPassword").on("input", () => {
+            if ($("#floatingPassword").val() != $("#floatingRepeatPassword").val()) {
+                $("#repeat_password_invalid").removeClass("d-none");
+                $("#submit_btn").prop("disabled", true);
+            }
+            else {
+                $("#repeat_password_invalid").addClass("d-none");
+                $("#submit_btn").prop("disabled", false);
+            }
+        })
+    })
+</script>
+{% endblock content%}

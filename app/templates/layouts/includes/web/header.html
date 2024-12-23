@@ -6,9 +6,6 @@
     <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
       <i class="bi bi-cast fs-1 p-0"></i>
     </a>
-    <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" action="/search">
-      <input type="search" class="form-control" placeholder="搜尋" aria-label="Search" name="q"
-        value="{{request.args.get('q','')}}">
-    </form>
+    {% include "layouts/includes/search_bar.html" %}
   </div>
 </header>

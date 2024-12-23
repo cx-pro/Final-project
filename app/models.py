@@ -40,10 +40,27 @@ class Media(db.Model):
 
     def __repr__(self):
         return '<Media %r>' % self.name
-    
+
     @property
     def category(self):
         return Category.query.filter_by(id=self.category_id).first()
+
+
+class Role(db.Model):
+    __tablename__ = 'b_Role'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, unique=True)
+    level = db.Column(db.Integer, unique=True)
+
+    def __init__(self, name, level):
+        self.name = name
+        self.level = level
+
+    def __repr__(self):
+        return '<Role %r>' % self.name
+
+
+from app.utils.config import setting  # nopep8
 
 
 class UserM(db.Model):
@@ -63,16 +80,6 @@ class UserM(db.Model):
     def __repr__(self):
         return '<UserM %r>' % self.name
 
-
-class Role(db.Model):
-    __tablename__ = 'b_Role'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text, unique=True)
-    level = db.Column(db.Integer, unique=True)
-
-    def __init__(self, name, level):
-        self.name = name
-        self.level = level
-
-    def __repr__(self):
-        return '<Role %r>' % self.name
+    @property
+    def is_admin(self):
+        return Role.query.filter_by(id=self.role_id).first().level <= setting().ADMIN_LEVEL

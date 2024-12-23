@@ -20,5 +20,6 @@
         onclick="history.back()"><i class="bi bi-arrow-bar-left me-3"></i>返回</button>
     <button type="button" class="btn btn-outline-primary fs-3 fw-bold" onclick="showFullscreen()">全螢幕</button>
 </div>
-<iframe id="media_frame" src="/media/source/{{media.id}}" class="border-0 w-100 min-vh-100"></iframe>
+<iframe id="media_frame" src="{{url_for('web.__get_media_source',id=media.id)}}"
+    class="border-0 w-100 min-vh-100"></iframe>
 {% endblock content%}

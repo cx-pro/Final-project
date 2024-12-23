@@ -26,14 +26,14 @@
 </div>
 <div class="container">
     <div>
-        <a href="/ctrl/new" class="btn btn-sm btn-outline-success fw-bold px-3">新增</a>
+        <a href="{{url_for('adm.__new')}}" class="btn btn-sm btn-outline-success fw-bold px-3">新增</a>
     </div>
     <div class="row">
         {% for m in media%}
         <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
             <div class="text-decoration-none text-reset">
                 <div class="d-flex justify-content-end mb-2 align-items-center gap-3">
-                    <a href="/ctrl/media/{{m.id}}/edit" class="text-decoration-none link-opacity-50-hover">
+                    <a href="{{url_for('adm.__edit',id=m.id)}}" class="text-decoration-none link-opacity-50-hover">
                         <i class=" bi bi-pencil-square fs-3"></i>
                     </a>
                     <a class="text-decoration-none link-opacity-50-hover link-danger" id="deleteItemBtn"
@@ -43,7 +43,7 @@
                     </a>
 
                 </div>
-                <a href="/ctrl/media/{{m.id}}" class="text-decoration-none fw-bold text-reset">
+                <a href="{{url_for('adm.__show_media',id=m.id)}}" class="text-decoration-none fw-bold text-reset">
                     <div class="border rounded-4 shadow px-3 py-4 items">
                         <div
                             class="border rounded-3 d-flex justify-content-center align-items-center py-5 mb-3 shadow-sm bg-black bg-opacity-25">
@@ -54,7 +54,7 @@
                         <div class="text-break"> {{m.name}} </div>
                 </a>
                 <div class="mt-3">
-                    <a href="/media?category={{m.category.id}}"
+                    <a href="{{url_for('web.__media',category=m.category.id)}}"
                         class="small px-2 py-1 rounded-3 text-bg-primary text-decoration-none fw-bold">{{{"audio":"音樂","video":"影片","ebook":"電子書"}[m.category.name]}}</a>
                 </div>
             </div>

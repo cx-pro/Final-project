@@ -37,6 +37,7 @@ app.register_blueprint(web)
 DEFAULT_NAMESPACE["enumerate"] = enumerate
 DEFAULT_NAMESPACE["config"] = config
 DEFAULT_NAMESPACE["setting"] = setting
+DEFAULT_NAMESPACE["int"] = int
 
 with app.app_context():
     db.create_all()

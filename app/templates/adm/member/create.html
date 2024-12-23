@@ -1,0 +1,38 @@
+{% extends "layouts/adm.html" %}
+{% block title %}會員管理{% endblock title %}
+{% block content%}
+<div class="container">
+    <div class="d-flex flex-column align-items-center">
+        <form method="post" class="col-12 col-md-8 col-lg-6">
+            <label for="">電子郵件</label>
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" required {% if userM %}value="{{ userM.email }}"
+                    {% endif %}>
+                {% if error %}
+                <div class="text-danger">{{error["email"]}}</div>
+                {% endif %}
+            </div>
+            <label for="">名稱</label>
+            <input type="text" name="name" class="form-control mb-3" required {% if userM %}value="{{ userM.name }}" {%
+                endif %}>
+            <label for="">密碼</label>
+            <input type="text" name="password" class="form-control mb-3"{% if userM and
+                request.path==url_for("adm.__create_member") %} value="{{ userM.password }}" required{% endif %}>
+            <label for="">身分</label>
+            <select name="role_id" class="form-select mb-3" required>
+                {% for role in roles %}
+                <option value="{{ role.id }}" {% if userM and int(userM.role_id)==role.id %}selected{% endif %}>{{
+                    role.name }}
+                </option>
+                {% endfor %}
+            </select>
+            <div class="w-100 justify-content-end text-end">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary fw-bold">儲存</button>
+                    <a href="/ctrl/member" class="btn btn-secondary fw-bold">返回</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content%}
