@@ -70,6 +70,11 @@ def rloader(r):
     return user
 
 
+# @app.route("/site-map")
+# def __site_map():
+#     return jsonify([rule.endpoint for rule in app.url_map.iter_rules()])
+
+
 http_server = WSGIServer(('0.0.0.0', int(os.environ.get("PORT", 3000))),
                          app,
                          log=sys.stdout)

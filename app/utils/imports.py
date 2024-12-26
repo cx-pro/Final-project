@@ -33,3 +33,4 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 from jinja2.defaults import DEFAULT_NAMESPACE
+
