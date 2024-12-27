@@ -67,7 +67,9 @@ def __edit(id):
 @adm.route("/ctrl/media/<int:id>/destroy")
 @roles_required('admin')
 def __destroy(id):
-    db.session.delete(Media.query.filter_by(id=id).first())
+    media = Media.query.filter_by(id=id).first()
+    os.remove(media.path)
+    db.session.delete(media)
     db.session.commit()
     return redirect(url_for("adm.__media_list"))
 
