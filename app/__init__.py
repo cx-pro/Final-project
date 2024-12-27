@@ -40,8 +40,8 @@ DEFAULT_NAMESPACE["setting"] = setting
 DEFAULT_NAMESPACE["int"] = int
 
 with app.app_context():
-    db.create_all()
-    # runSeeder()
+    # db.create_all()
+    runSeeder()
 
 
 @login_manager.user_loader
