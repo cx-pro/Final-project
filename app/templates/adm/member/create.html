@@ -9,6 +9,7 @@
                 <input type="email" name="email" class="form-control" required {% if userM %}value="{{ userM.email }}"
                     {% endif %}>
                 {% if error %}
+                {{error}}
                 <div class="text-danger">{{error["email"]}}</div>
                 {% endif %}
             </div>
@@ -16,7 +17,7 @@
             <input type="text" name="name" class="form-control mb-3" required {% if userM %}value="{{ userM.name }}" {%
                 endif %}>
             <label for="">密碼</label>
-            <input type="text" name="password" class="form-control mb-3"{% if userM and
+            <input type="text" name="password" class="form-control mb-3" {% if userM and
                 request.path==url_for("adm.__create_member") %} value="{{ userM.password }}" required{% endif %}>
             <label for="">身分</label>
             <select name="role_id" class="form-select mb-3" required>

@@ -81,13 +81,15 @@ def __member():
 @adm.route("/member/<id>/edit", methods=["get", "post"])
 @roles_required('admin')
 def __edit_member(id):
-    old_user_query = UserM.query.filter_by(id=id)
-    old_user = old_user_query.first()
-    if request.method.lower == "post":
+    old_user = UserM.query.filter_by(id=id).first()
+    if request.method.lower() == "post":
         if request.form["email"] != old_user.email and UserM.query.filter_by(email=request.form["email"]).first():
             return rd("member/create.html", roles=Role.query.all(), error={"email": "電子信箱已被使用"}, userM=UserM(request.form["email"], request.form["name"],
                                                                                                              request.form["password"], int(request.form["role_id"])))
-        old_user_query.update({})
+        UserM.query.filter_by(id=id).update(
+            {"email": request.form["email"], "name": request.form["name"], "password": bcrypt.generate_password_hash(request.form["password"]), "role_id": int(request.form["role_id"])} if request.form["password"] else {"email": request.form["email"], "name": request.form["name"], "role_id": int(request.form["role_id"])})
+        db.session.commit()
+        return redirect(url_for("adm.__member"))
 
     return rd("member/create.html", userM=old_user, roles=Role.query.all())
 

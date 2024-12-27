@@ -36,7 +36,7 @@
                     <a href="{{url_for('adm.__edit',id=m.id)}}" class="text-decoration-none link-opacity-50-hover">
                         <i class=" bi bi-pencil-square fs-3"></i>
                     </a>
-                    <a class="text-decoration-none link-opacity-50-hover link-danger" id="deleteItemBtn"
+                    <a class="text-decoration-none link-opacity-50-hover link-danger deleteItemBtn"
                         data-bs-toggle="modal" data-bs-target="#DeleteItemStaticBackdrop" style="cursor: pointer;"
                         data-target="{{m.id}}" data-name="{{m.name}}">
                         <i class="bi bi-trash3 fs-3"></i>
@@ -77,9 +77,9 @@
 </div>
 <script>
     $(() => {
-        $("#deleteItemBtn").click(() => {
-            $("#confirmDel").attr("href", "/ctrl/media/" + $("#deleteItemBtn").data("target") + "/destroy")
-            $("#DeleteItemStaticBackdrop .modal-body").html($("#deleteItemBtn").data("name"))
+        $(".deleteItemBtn").click((e) => {
+            $("#confirmDel").attr("href", "/ctrl/media/" + $(e.currentTarget).data("target") + "/destroy")
+            $("#DeleteItemStaticBackdrop .modal-body").html($(e.currentTarget).data("name"))
         })
     })
 </script>
