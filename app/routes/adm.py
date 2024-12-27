@@ -23,7 +23,7 @@ def __ctrl():
 @roles_required('admin')
 def __media_list():
     category = request.args.get("category", 0)
-    return rd("media/list.html", media=sorted(Media.query.filter_by(category_id=category) if category else Media.query.all()))
+    return rd("media/list.html", media=list(Media.query.filter_by(category_id=category) if category else Media.query.all()))
 
 
 @adm.route("/ctrl/media/<id>")

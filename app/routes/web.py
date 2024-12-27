@@ -21,7 +21,7 @@ def __index():
 @roles_required("user")
 def __media():
     category = request.args.get("category", 0)
-    return rd("media/list.html", media=sorted(Media.query.filter_by(category_id=category) if category else Media.query.all()))
+    return rd("media/list.html", media=list(Media.query.filter_by(category_id=category) if category else Media.query.all()))
 
 
 @web.route("/media/<id>")

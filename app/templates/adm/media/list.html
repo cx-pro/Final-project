@@ -52,6 +52,7 @@
                                 class="bi bi-book fs-1"></i>'}[m.category.name]|safe}}
                         </div>
                         <div class="text-break"> {{m.name}} </div>
+                    </div>
                 </a>
                 <div class="mt-3">
                     <a href="{{url_for('web.__media',category=m.category.id)}}"
@@ -68,10 +69,9 @@
             </div>
             <hr>
         </div>
-
+        {%endfor%}
     </div>
 </div>
-{%endfor%}
 
 </div>
 </div>
